@@ -452,11 +452,6 @@
   
   let jsonData = null;
   
-/*	document.getElementById('upload').addEventListener('change', function (e) {
-  const file = e.target.files[0];
-  const reader = new FileReader();
-
-  reader.onload = function (e) { */
     document.getElementById('starter').addEventListener('click', function () {
     fetch('juxtabowlbase.xlsx')
     .then(response => response.arrayBuffer())
@@ -503,7 +498,6 @@
 
   });
 
-  //reader.readAsArrayBuffer(file);
 });
 
 function clickLeftT() {
