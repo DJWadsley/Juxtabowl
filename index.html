@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Juxtaquiz</title>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff7ef;
+      color: #000;
+      text-align: center;
+      padding: 40px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+        /* Dark Mode Styles */
+    body.dark-mode {
+      background-color: #1a1a1a;
+      color: #f0f0f0;
+    }
+
+    .dark-mode .city-box {
+      background-color: #333;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    p.question {
+      font-size: 20px;
+      margin-bottom: 40px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+    }
+
+    .city-box {
+      background-color: #f0f0f0;
+      border-radius: 10px;
+      padding: 10px;
+      width: 400px;
+      transition: background-color 0.3s;
+    }
+
+    .dark-mode .city-box {
+      background-color: #333;
+    }
+	
+    .dark-mode .map-placeholder {
+      background-color: #444;
+      color: #ccc;
+    }
+	
+    .dark-mode-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 8px 14px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #555;
+      color: white;
+      transition: background-color 0.3s;
+    }
+	
+    .answer1-button {
+      position: absolute;
+      top: 700px;
+      right: 700px;
+      padding: 8px 14px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #555;
+      color: white;
+      transition: background-color 0.3s;
+    }
+
+
+    .city-name {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+	
+    .city-margin {
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+	
+	.qtype {
+      font-size: 0px;
+      margin-bottom: 0px;
+    }
+
+    .map-placeholder {
+      background-color: #d0d6e0;
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 5px;
+      color: #555;
+      font-size: 16px;
+    }
+    .map-placeholder:hover {
+      background-color: #bebebe;
+
+    .center {
+    margin-left: auto;
+    margin-right: auto;
+	display: block;
+    }
+
+
+
+    .dark-mode-toggle:hover {
+      background-color: #777;
+    }
+
+    input[type="file"] {
+      margin-bottom: 20px;
+    }
+	table, th, td {
+    border:5px solid black;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="dark-mode-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+  <button class="answer1-button" id="nexter">Next Question</button>
+
+  <h1><strong>Juxtaquiz</strong></h1>
+  <p class="question" id="question1">
+    Upload a file!
+  </p>
+  
+<div style="width: 550px; border: 2px solid #ccc; margin-left: auto; margin-right: auto;">
+  <table id="resTable" class="center">
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+</div>
+
+  <input type="file" id="upload" accept=".xlsx, .xls" />
+
+  <div class="container" >
+    <div class="city-box" id="city1-box">
+      <div class="city-name" id="city1-name"><u></u></div>
+      <div class="map-placeholder"></div>
+	  <div class="city-margin" id="city1-margin"></div>
+    </div>
+
+    <div class="city-box" id="city2-box">
+      <div class="city-name" id="city2-name"><u></u></div>
+      <div class="map-placeholder"></div>
+	  <div class="city-margin" id="city2-margin"></div>
+	  <div class="qtype" id="qtype">99</div>
+	  <div class="qtype" id="runk">1</div>
+	  <div class="qtype" id="corrnum">0</div>
+	  <div class="qtype" id="lr">99</div>
+    </div>
+  </div>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+    }
+
+    function showResults() {
+    const corrnum = parseInt(document.getElementById('corrnum').textContent)
+	  	if (corrnum === 0) {
+	  document.getElementById('question1').textContent  = 'Everyone is impressive in their own way. \n 0/5';
+	} else if (corrnum === 1) {
+	  document.getElementById('question1').textContent  = 'Despair is but the first few thousand steps on the road to enlightenment. \n 1/5';
+	} else if (corrnum === 2) {
+	  document.getElementById('question1').textContent  = 'Almost better than a monkey throwing darts. \n 2/5';
+	} else if (corrnum === 3) {
+	  document.getElementById('question1').textContent  = 'Statistically, above average. \n 3/5';
+	} else if (corrnum === 4) {
+	  document.getElementById('question1').textContent  = 'okay... \n 4/5';
+	} else if (corrnum === 5) {
+	  document.getElementById('question1').textContent  = 'Congralation ! \n 5/5';
+	}
+	const city1Box = document.getElementById('city1-box');
+    const city2Box = document.getElementById('city2-box');
+    const resTable = document.getElementById('resTable');
+
+  if (city1Box) {
+    city1Box.style.display = 'none';
+  }
+  if (city2Box) {
+    city2Box.style.display = 'none';
+  }
+  if (resTable) {
+    resTable.style.display = 'block'; // Or 'table' if it's a <table> element
+  }
+    }
+	
+	function fillTable () {
+    const table = document.getElementById('resTable');
+    const rows = table.getElementsByTagName('tr');
+    const numCols = 2; // The matrix has 2 columns
+    const i = Math.trunc(parseInt(document.getElementById('runk').textContent) / 2)
+	
+	const cells = rows[i].getElementsByTagName('td');
+      // This row exists but is empty, fill it
+	  for (let j = 0; j < numCols; j++) {
+        cells[0].textContent = document.getElementById('city1-name').textContent + '   ' + document.getElementById('city1-margin').textContent;
+        cells[1].textContent = document.getElementById('city2-name').textContent + '   ' + document.getElementById('city2-margin').textContent;
+      }
+	  
+      return; // Exit after filling the first empty row
+    }
+
+	
+	function nextTossup() {
+	    // Find matching rows in the Excel data
+	  if (document.getElementById('runk').textContent === '11') {
+        showResults();
+	    return;
+    }  
+	const city1Data = jsonData.find(row => row.Order === parseInt(document.getElementById('runk').textContent));
+    const city2Data = jsonData.find(row => row.Order === parseInt(document.getElementById('runk').textContent)+1);
+
+	const Qtype = Math.floor(Math.random() * 3);
+    document.getElementById('city2-box').style.backgroundColor = ' #f0f0f0'; 
+	document.getElementById('city1-box').style.backgroundColor = ' #f0f0f0'; 
+	document.getElementById('city1-margin').textContent = '';
+	document.getElementById('city2-margin').textContent = '';
+	document.getElementById('qtype').textContent  = Qtype;
+    //const currentQ = round((Date.now() - 1746072001000) / 86400000)
+    if (city1Data && city1Data.qtext) {
+      document.querySelector('#city1-name + .map-placeholder').textContent = city1Data.qtext;
+	  document.getElementById('city1-name').textContent  = city1Data.Answer;
+    } else {
+      document.querySelector('#city1-name + .map-placeholder').textContent = "No qtext";
+    }
+
+    if (city2Data && city2Data.qtext) {
+      document.querySelector('#city2-name + .map-placeholder').textContent = city2Data.qtext;
+	  document.getElementById('city2-name').textContent  = city2Data.Answer;
+    } else {
+      document.querySelector('#city2-name + .map-placeholder').textContent = "No qtext found.";
+    }
+	breakme: if (Qtype === 0) {
+	  if (city1Data.Conv === city2Data.Conv) {
+	  Qtype = 2;
+	  break breakme; }
+	  document.getElementById('question1').textContent  = 'Which tossup had the higher conversion percentage?';
+	} 
+	if (Qtype === 1) {
+	  document.getElementById('question1').textContent  = 'Which tossup had the higher interrupt percentage?';
+	} 
+	if (Qtype === 2) {
+	  document.getElementById('question1').textContent  = 'Which tossup had the later average buzz?';
+	}
+	}
+
+    function nextBonus() {
+	    // Find matching rows in the Excel data
+	  if (document.getElementById('runk').textContent === '11') {
+        showResults();
+	    return;
+    }  
+	const city1Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('runk').textContent));
+    const city2Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('runk').textContent)+1);
+
+	const Qtype = Math.floor(Math.random() * 3);
+    document.getElementById('city2-box').style.backgroundColor = ' #f0f0f0'; 
+	document.getElementById('city1-box').style.backgroundColor = ' #f0f0f0'; 
+	document.getElementById('city1-margin').textContent = '';
+	document.getElementById('city2-margin').textContent = '';
+	document.getElementById('qtype').textContent  = Qtype;
+    //const currentQ = Math.round((Date.now() - 1746072001000) / 86400000)
+	
+   	if (Qtype === 0) {
+	  document.getElementById('question1').textContent  = 'Which bonus had a higher PPB?';
+	  document.querySelector('#city2-name + .map-placeholder').textContent = city2Data.FullText;
+	  document.getElementById('city2-name').textContent  = city2Data.EAnswer +", "+ city2Data.MAnswer +", "+ city2Data.HAnswer;
+	  document.querySelector('#city1-name + .map-placeholder').textContent = city1Data.FullText;
+	  document.getElementById('city1-name').textContent  = city1Data.EAnswer +", " + city1Data.MAnswer +", "+ city1Data.HAnswer;
+	} else if (Qtype === 1) {
+	  document.getElementById('question1').textContent  = 'Which bonus had a higher delta between the easy and medium parts?';
+	  document.querySelector('#city2-name + .map-placeholder').textContent = city2Data.FullText;
+	  document.getElementById('city2-name').textContent  = city2Data.EAnswer +", "+ city2Data.MAnswer;
+	  document.querySelector('#city1-name + .map-placeholder').textContent = city1Data.FullText;
+	  document.getElementById('city1-name').textContent  = city1Data.EAnswer +", " + city1Data.MAnswer ;
+	} else if (Qtype === 2) {
+	  document.getElementById('question1').textContent  = 'Which bonus had a higher delta between the medium and hard parts?';
+	  document.querySelector('#city2-name + .map-placeholder').textContent = city2Data.FullText;
+	  document.getElementById('city2-name').textContent  = city2Data.MAnswer +", "+ city2Data.HAnswer;
+	  document.querySelector('#city1-name + .map-placeholder').textContent = city1Data.FullText;
+	  document.getElementById('city1-name').textContent  = city1Data.MAnswer +", "+ city1Data.HAnswer;
+	}
+	}
+	
+	function nextBPart() {
+	    // Find matching rows in the Excel data
+	  if (document.getElementById('runk').textContent === '11') {
+        showResults();
+	    return;
+    }  
+	const city1Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('runk').textContent));
+    const city2Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('runk').textContent)+1);
+
+	const Qtype = Math.floor(Math.random() * 3);
+    document.getElementById('city2-box').style.backgroundColor = ' #f0f0f0'; 
+	document.getElementById('city1-box').style.backgroundColor = ' #f0f0f0'; 
+	document.getElementById('city1-margin').textContent = '';
+	document.getElementById('city2-margin').textContent = '';
+	document.getElementById('qtype').textContent  = Qtype;
+    //const currentQ = Math.round((Date.now() - 1746072001000) / 86400000)
+
+	breakme: if (Qtype === 0) {
+	  if (city1Data.EConv === city2Data.EConv) {
+	  Qtype = 1;
+	  break breakme; }
+	  document.getElementById('question1').textContent  = 'Which bonus easy part was harder?';
+	  document.querySelector('#city1-name + .map-placeholder').textContent = city1Data.EText;
+	  document.getElementById('city1-name').textContent  = city1Data.EAnswer;
+	  document.querySelector('#city2-name + .map-placeholder').textContent = city2Data.EText;
+	  document.getElementById('city2-name').textContent  = city2Data.EAnswer;
+	}
+	breakme: if (Qtype === 2) {
+	  if (city1Data.HConv === city2Data.HConv) {
+	  Qtype = 1;
+	  break breakme; }
+	  document.getElementById('question1').textContent  = 'Which bonus hard part was harder?';
+	  document.querySelector('#city1-name + .map-placeholder').textContent = city1Data.HText;
+	  document.getElementById('city1-name').textContent  = city1Data.HAnswer;
+	  document.querySelector('#city2-name + .map-placeholder').textContent = city2Data.HText;
+	  document.getElementById('city2-name').textContent  = city2Data.HAnswer;
+	}
+	if (Qtype === 1) {
+	  document.getElementById('question1').textContent  = 'Which bonus medium part was harder?';
+	  document.querySelector('#city1-name + .map-placeholder').textContent = city1Data.MText;
+	  document.getElementById('city1-name').textContent  = city1Data.MAnswer;
+	  document.querySelector('#city2-name + .map-placeholder').textContent = city2Data.MText;
+	  document.getElementById('city2-name').textContent  = city2Data.MAnswer;
+	} 
+
+	}
+	
+  </script>
+
+  <script>
+  
+  let jsonData = null;
+  
+	document.getElementById('upload').addEventListener('change', function (e) {
+  const file = e.target.files[0];
+  const reader = new FileReader();
+
+  reader.onload = function (e) {
+    const data = new Uint8Array(e.target.result);
+    const workbook = XLSX.read(data, { type: 'array' });
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
+    jsonData = XLSX.utils.sheet_to_json(worksheet);
+    const Qtype = Math.floor(Math.random() * 3);
+    const resTable = document.getElementById('resTable');
+    resTable.style.display = 'none'; // Or 'table' if it's a <table> element
+    // Find matching rows in the Excel data
+    const city1Data = jsonData.find(row => row.Order === 1);
+    const city2Data = jsonData.find(row => row.Order === 2);
+    // document.getElementById('runk').textContent  = 1;
+
+    if (city1Data && city1Data.qtext) {
+      document.querySelector('#city1-name + .map-placeholder').textContent = city1Data.qtext;
+	  document.getElementById('city1-name').textContent  = city1Data.Answer;
+    } else {
+      document.querySelector('#city1-name + .map-placeholder').textContent = city1Data.Heard;
+    }
+    document.getElementById('qtype').textContent  = Qtype;
+    if (city2Data && city2Data.qtext) {
+      document.querySelector('#city2-name + .map-placeholder').textContent = city2Data.qtext;
+	  document.getElementById('city2-name').textContent  = city2Data.Answer;
+    } else {
+      document.querySelector('#city2-name + .map-placeholder').textContent = "No qtext found.";
+    }
+	if (Qtype === 0) {
+	  document.getElementById('question1').textContent  = 'Which tossup had the higher conversion percentage?';
+	} else if (Qtype === 1) {
+	  document.getElementById('question1').textContent  = 'Which tossup had the higher interrupt percentage?';
+	} else if (Qtype === 2) {
+	  document.getElementById('question1').textContent  = 'Which tossup had the later average buzz?';
+	}
+
+    document.getElementById('city1-box').addEventListener('click', clickLeftT);
+    document.getElementById('city2-box').addEventListener('click', clickRightT);
+
+
+  };
+
+  reader.readAsArrayBuffer(file);
+});
+
+function clickLeftT() {
+    document.getElementById('lr').textContent = 1;
+    resolveTossup();
+}
+
+function clickRightT() {
+    document.getElementById('lr').textContent = 0;
+    resolveTossup();
+}
+
+function clickLeftB() {
+    document.getElementById('lr').textContent = 1;
+    resolveBonus();
+}
+
+function clickRightB() {
+    document.getElementById('lr').textContent = 0;
+    resolveBonus();
+}
+
+function clickLeftBP() {
+    document.getElementById('lr').textContent = 1;
+    resolveBPart();
+}
+
+function clickRightBP() {
+    document.getElementById('lr').textContent = 0;
+    resolveBPart();
+}
+
+function nextB() {
+    nextBonus();
+}
+
+function nextBP() {
+    nextBPart();
+}
+
+function nextT() {
+    nextTossup();
+}
+
+function resolveBonus() {
+  const city1Answer = document.getElementById('city1-name').textContent.trim();
+  const city2Answer = document.getElementById('city2-name').textContent.trim();
+  const Qtype = document.getElementById('qtype').textContent.trim();
+  const city1Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('runk').textContent));
+  const city2Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('runk').textContent)+1);
+  if (Qtype === '0') {
+    document.getElementById('city1-margin').textContent = city1Data.PPB;
+	document.getElementById('city2-margin').textContent = city2Data.PPB;
+  } else if (Qtype === '1') {
+    document.getElementById('city1-margin').textContent = `${(city1Data.EConv * 100).toFixed(0)}%` + " vs " + `${(city1Data.MConv * 100).toFixed(0)}%`;
+	document.getElementById('city2-margin').textContent = `${(city2Data.EConv * 100).toFixed(0)}%` + " vs " + `${(city2Data.MConv * 100).toFixed(0)}%`;
+  } else if (Qtype === '2') {
+    document.getElementById('city1-margin').textContent = `${(city1Data.MConv * 100).toFixed(0)}%` + " vs " + `${(city1Data.HConv * 100).toFixed(0)}%`;
+	document.getElementById('city2-margin').textContent = `${(city2Data.MConv * 100).toFixed(0)}%` + " vs " + `${(city2Data.HConv * 100).toFixed(0)}%`;
+  }
+    
+  if (Qtype === '0') {
+    if (city2Data.PPB > city1Data.PPB) {
+    document.getElementById('city2-box').style.backgroundColor = ' #54ec4e'; // Hexadecimal color;
+	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+ 1 -  parseInt(document.getElementById('lr').textContent);
+    } else {
+    document.getElementById('city1-box').style.backgroundColor = ' #54ec4e'; // Hexadecimal color;
+	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+  parseInt(document.getElementById('lr').textContent);
+    }
+  } else if (Qtype === '1') {
+    if ((city2Data.EConv - city2Data.MConv) > (city1Data.EConv - city1Data.MConv)) {
+    document.getElementById('city2-box').style.backgroundColor = ' #54ec4e'; // Hexadecimal color;
+	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+ 1 -  parseInt(document.getElementById('lr').textContent);
+    } else {
+    document.getElementById('city1-box').style.backgroundColor = ' #54ec4e'; // Hexadecimal color;
+	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+  parseInt(document.getElementById('lr').textContent);
+    }
+  } else if (Qtype === '2') {
+    if ((city2Data.MConv - city2Data.HConv) > (city1Data.MConv - city1Data.HConv)) {
+    document.getElementById('city2-box').style.backgroundColor = ' #54ec4e'; // Hexadecimal color;
+	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+ 1 -  parseInt(document.getElementById('lr').textContent);
+    } else {
+    document.getElementById('city1-box').style.backgroundColor = ' #54ec4e'; // Hexadecimal color;
+	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+  parseInt(document.getElementById('lr').textContent);
+    }
+    
+  }
+  
+  fillTable();
+  document.getElementById('runk').textContent = parseInt(document.getElementById('runk').textContent)+2;
+  if (document.getElementById('runk').textContent === '11') {
+     document.getElementById('nexter').textContent = 'Show Results'
+  }  
+
+
+  document.getElementById('city1-box').removeEventListener('click', clickLeftB);
+  document.getElementById('city2-box').removeEventListener('click', clickRightB);
+  document.getElementById('nexter').removeEventListener('click', nextB); 
+  document.getElementById('nexter').addEventListener('click', nextBP);   
+  document.getElementById('city1-box').addEventListener('click', clickLeftBP);
+  document.getElementById('city2-box').addEventListener('click', clickRightBP);
+  
+}
+
+function resolveTossup() {
+  const city1Answer = document.getElementById('city1-name').textContent.trim();
+  const city2Answer = document.getElementById('city2-name').textContent.trim();
+  const Qtype = document.getElementById('qtype').textContent.trim();
+  const city1Data = jsonData.find(row =>
+    row.Answer && row.Answer.toString().trim().toLowerCase() === city1Answer.toLowerCase()
+  );
+  const city2Data = jsonData.find(row =>
+    row.Answer && row.Answer.toString().trim().toLowerCase() === city2Answer.toLowerCase()
+  );
+  if (Qtype === '0') {
+    document.getElementById('city1-margin').textContent = `${(city1Data.Conv * 100).toFixed(0)}%`;
+	document.getElementById('city2-margin').textContent = `${(city2Data.Conv * 100).toFixed(0)}%`;
+  } else if (Qtype === '1') {
+    document.getElementById('city1-margin').textContent = `${(city1Data.Neg * 100).toFixed(0)}%`;
+	document.getElementById('city2-margin').textContent = `${(city2Data.Neg * 100).toFixed(0)}%`;
+  } else if (Qtype === '2') {
+    document.getElementById('city1-margin').textContent = city1Data.ABuzz;
+	document.getElementById('city2-margin').textContent = city2Data.ABuzz;
+  }
+    
+  if (Qtype === '0') {
+    if (city2Data.Conv > city1Data.Conv) {
+    document.getElementById('city2-box').style.backgroundColor = ' #54ec4e'; // Hexadecimal color;
+	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+ (1 -  parseInt(document.getElementById('lr').textContent));
+    } else {
+    document.getElementById('city1-box').style.backgroundColor = ' #54ec4e'; // Hexadecimal color;
+	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+  parseInt(document.getElementById('lr').textContent);
+    }
+  } else if (Qtype === '1') {
+    if (city2Data.Neg > city1Data.Neg) {
+    document.getElementById('city2-box').style.backgroundColor = ' #54ec4e'; // Hexadecimal color;
+	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+ 1 -  parseInt(document.getElementById('lr').textContent);
+    } else {
+    document.getElementById('city1-box').style.backgroundColor = ' #54ec4e'; // Hexadecimal color;
+	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+  parseInt(document.getElementById('lr').textContent);
+    }
+  } else if (Qtype === '2') {
+    if (city2Data.ABuzz > city1Data.ABuzz) {
+    document.getElementById('city2-box').style.backgroundColor = ' #54ec4e'; // Hexadecimal color;
+	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+ 1 -  parseInt(document.getElementById('lr').textContent);
+    } else {
+    document.getElementById('city1-box').style.backgroundColor = ' #54ec4e'; // Hexadecimal color;
+	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+ parseInt(document.getElementById('lr').textContent);
+    }
+  }
+  fillTable();
+  document.getElementById('runk').textContent = parseInt(document.getElementById('runk').textContent)+2;
+  if (document.getElementById('runk').textContent === '11') {
+     document.getElementById('nexter').textContent = 'Show Results'
+  }
+
+  document.getElementById('city1-box').removeEventListener('click', clickLeftT);
+  document.getElementById('city2-box').removeEventListener('click', clickRightT);
+  document.getElementById('nexter').removeEventListener('click', nextT); 
+  document.getElementById('nexter').addEventListener('click', nextB);   
+  document.getElementById('city1-box').addEventListener('click', clickLeftB);
+  document.getElementById('city2-box').addEventListener('click', clickRightB);
+
+}
+
+function resolveBPart() {
+  const city1Answer = document.getElementById('city1-name').textContent.trim();
+  const city2Answer = document.getElementById('city2-name').textContent.trim();
+  const Qtype = document.getElementById('qtype').textContent.trim();
+  const city1Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('runk').textContent));
+  const city2Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('runk').textContent)+1);
+  if (Qtype === '0') {
+    document.getElementById('city1-margin').textContent = `${(city1Data.EConv * 100).toFixed(0)}%`;
+	document.getElementById('city2-margin').textContent = `${(city2Data.EConv * 100).toFixed(0)}%`;
+  } else if (Qtype === '1') {
+    document.getElementById('city1-margin').textContent = `${(city1Data.MConv * 100).toFixed(0)}%`;
+	document.getElementById('city2-margin').textContent = `${(city2Data.MConv * 100).toFixed(0)}%`;
+  } else if (Qtype === '2') {
+    document.getElementById('city1-margin').textContent = `${(city1Data.HConv * 100).toFixed(0)}%`;
+	document.getElementById('city2-margin').textContent = `${(city2Data.HConv * 100).toFixed(0)}%`;
+  }
+    
+  if (Qtype === '0') {
+    if (city2Data.EConv < city1Data.EConv) {
+    document.getElementById('city2-box').style.backgroundColor = ' #54ec4e'; // Hexadecimal color;
+	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+ (1 -  parseInt(document.getElementById('lr').textContent));
+    } else {
+    document.getElementById('city1-box').style.backgroundColor = ' #54ec4e'; // Hexadecimal color;
+	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+  parseInt(document.getElementById('lr').textContent);
+    }
+  } else if (Qtype === '1') {
+    if (city2Data.MConv < city1Data.MConv) {
+    document.getElementById('city2-box').style.backgroundColor = ' #54ec4e'; // Hexadecimal color;
+	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+ 1 -  parseInt(document.getElementById('lr').textContent);
+    } else {
+    document.getElementById('city1-box').style.backgroundColor = ' #54ec4e'; // Hexadecimal color;
+	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+  parseInt(document.getElementById('lr').textContent);
+    }
+  } else if (Qtype === '2') {
+    if (city2Data.HConv < city1Data.HConv) {
+    document.getElementById('city2-box').style.backgroundColor = ' #54ec4e'; // Hexadecimal color;
+	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+ 1 -  parseInt(document.getElementById('lr').textContent);
+    } else {
+    document.getElementById('city1-box').style.backgroundColor = ' #54ec4e'; // Hexadecimal color;
+	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+ parseInt(document.getElementById('lr').textContent);
+    }
+  }
+  fillTable();
+  document.getElementById('runk').textContent = parseInt(document.getElementById('runk').textContent)+2;
+  if (document.getElementById('runk').textContent === '11') {
+     document.getElementById('nexter').textContent = 'Show Results'
+  }
+
+  document.getElementById('city1-box').removeEventListener('click', clickLeftBP);
+  document.getElementById('city2-box').removeEventListener('click', clickRightBP);
+  document.getElementById('nexter').removeEventListener('click', nextBP); 
+  document.getElementById('nexter').addEventListener('click', nextT);   
+  document.getElementById('city1-box').addEventListener('click', clickLeftT);
+  document.getElementById('city2-box').addEventListener('click', clickRightT);
+
+}
+
+  </script>
+</body>
+</html>
