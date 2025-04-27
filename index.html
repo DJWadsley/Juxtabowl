@@ -473,11 +473,11 @@
     const resTable = document.getElementById('resTable');
     resTable.style.display = 'none'; // Or 'table' if it's a <table> element
     // Find matching rows in the Excel data
-    const city1Data = jsonData.find(row => row.Order === 1);
-    const city2Data = jsonData.find(row => row.Order === 2);
     document.getElementById('bRunk').textContent  = Math.trunc((Date.now() - 1746072001000) / 86400000) * 6 + 1 +(50);
 	document.getElementById('tRunk').textContent  = Math.trunc((Date.now() - 1746072001000) / 86400000) * 4 + 1 +(50);
 	document.getElementById('runk').textContent  = 1;
+	const city1Data = jsonData.find(row => row.Order === parseInt(document.getElementById('tRunk').textContent));
+    const city2Data = jsonData.find(row => row.Order === parseInt(document.getElementById('tRunk').textContent)+1);
 
     if (city1Data && city1Data.qtext) {
       document.querySelector('#city1-name + .map-placeholder').textContent = city1Data.qtext;
