@@ -335,7 +335,7 @@
 	const city1Data = jsonData.find(row => row.Order === parseInt(document.getElementById('tRunk').textContent));
     const city2Data = jsonData.find(row => row.Order === parseInt(document.getElementById('tRunk').textContent)+1);
 
-    const Qtype = (Math.sin(parseInt(document.getElementById('tRunk').textContent)) * 10000) % 3;
+    const Qtype = Math.round((Math.sin(parseInt(document.getElementById('tRunk').textContent)) * 10000)) % 3;
     document.getElementById('city2-box').style.backgroundColor = ' #f0f0f0'; 
 	document.getElementById('city1-box').style.backgroundColor = ' #f0f0f0'; 
 	document.getElementById('city1-margin').textContent = '';
@@ -378,7 +378,7 @@
 	const city1Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('bRunk').textContent));
     const city2Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('bRunk').textContent)+1);
 
-    const Qtype = (Math.sin(parseInt(document.getElementById('bRunk').textContent)) * 10000) % 3;
+    const Qtype = Math.round((Math.sin(parseInt(document.getElementById('bRunk').textContent)) * 10000)) % 3;
 
     document.getElementById('city2-box').style.backgroundColor = ' #f0f0f0'; 
 	document.getElementById('city1-box').style.backgroundColor = ' #f0f0f0'; 
@@ -417,7 +417,7 @@
 	const city1Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('bRunk').textContent));
     const city2Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('bRunk').textContent)+1);
 
-    const Qtype = (Math.sin(parseInt(document.getElementById('bRunk').textContent)) * 10000) % 3;
+    const Qtype = Math.round((Math.sin(parseInt(document.getElementById('bRunk').textContent)) * 10000)) % 3;
     document.getElementById('city2-box').style.backgroundColor = ' #f0f0f0'; 
 	document.getElementById('city1-box').style.backgroundColor = ' #f0f0f0'; 
 	document.getElementById('city1-margin').textContent = '';
@@ -476,7 +476,7 @@
     document.getElementById('bRunk').textContent  = Math.trunc((Date.now() - 1746072001000) / 86400000) * 6 + 1 +(50);
 	document.getElementById('tRunk').textContent  = Math.trunc((Date.now() - 1746072001000) / 86400000) * 4 + 1 +(50);
 	document.getElementById('runk').textContent  = 1;
-    const Qtype = (Math.sin(parseInt(document.getElementById('tRunk').textContent)) * 10000) % 3;
+    const Qtype = Math.round((Math.sin(parseInt(document.getElementById('tRunk').textContent)) * 10000)) % 3;
 	const city1Data = jsonData.find(row => row.Order === parseInt(document.getElementById('tRunk').textContent));
     const city2Data = jsonData.find(row => row.Order === parseInt(document.getElementById('tRunk').textContent)+1);
 
