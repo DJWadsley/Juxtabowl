@@ -335,7 +335,7 @@
 	const city1Data = jsonData.find(row => row.Order === parseInt(document.getElementById('tRunk').textContent));
     const city2Data = jsonData.find(row => row.Order === parseInt(document.getElementById('tRunk').textContent)+1);
 
-	const Qtype = Math.floor((Math.sin(parseInt(document.getElementById('tRunk').textContent)) * 10000) % 1; * 3);
+	const Qtype = Math.floor((Math.sin(parseInt(document.getElementById('tRunk').textContent)) * 10000) % 1 * 3);
     document.getElementById('city2-box').style.backgroundColor = ' #f0f0f0'; 
 	document.getElementById('city1-box').style.backgroundColor = ' #f0f0f0'; 
 	document.getElementById('city1-margin').textContent = '';
@@ -416,7 +416,7 @@
 	const city1Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('bRunk').textContent));
     const city2Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('bRunk').textContent)+1);
 
-	const Qtype = Math.floor((Math.sin(parseInt(document.getElementById('bRunk').textContent)) * 10000) % 1; * 3);
+	const Qtype = Math.floor((Math.sin(parseInt(document.getElementById('bRunk').textContent)) * 10000) % 1 * 3);
     document.getElementById('city2-box').style.backgroundColor = ' #f0f0f0'; 
 	document.getElementById('city1-box').style.backgroundColor = ' #f0f0f0'; 
 	document.getElementById('city1-margin').textContent = '';
@@ -469,7 +469,7 @@
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
     jsonData = XLSX.utils.sheet_to_json(worksheet);
-    const Qtype = Math.floor(Math.random() * 3);
+    const Qtype = Math.floor((Math.sin(parseInt(document.getElementById('bRunk').textContent)) * 10000) % 1 * 3);
     const resTable = document.getElementById('resTable');
     resTable.style.display = 'none'; // Or 'table' if it's a <table> element
     // Find matching rows in the Excel data
