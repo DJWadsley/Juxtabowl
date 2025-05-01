@@ -263,13 +263,20 @@
     <p>You will be given two quizbowl questions and a prompt asking which of them is greater in a certain characteristic. Click on the question that you think matches the prompt.</p>
 
     <h3>Tossups</h3>
-    <p>You can be asked which tossup had a higher conversion percentage, which had a higher interrupt percentage (more negs), or which tossup had the later average (correct) buzz.</p>
+    <p>You can be asked which tossup had a higher conversion percentage, which had a higher interrupt percentage, or which tossup had the later average buzz.</p>
 
     <h3>Bonuses</h3>
-    <p>You can be asked which bonus had a higher overall PPB, or which bonus had the higher difficulty dropoff between two parts (easy and medium or medium and hard).</p>
+    <p>You can be asked which bonus had a higher overall PPB, or which bonus had the higher delta between certain parts.</p>
 
     <h3>Bonus Parts</h3>
     <p>Finally, you can be asked which individual bonus part had a higher conversion rate. Comparisons will always be made medium-to-medium, etc. Have fun!</p>
+	
+	<h3>Glossary</h3>
+    <p>Interrupt percentage: the percentage of rooms where at least one player buzzed in incorrectly before the end of the question</p>
+    <p>Conversion percentage: the percentage of rooms where one player buzzed in with the correct answer</p>
+    <p>Average buzz: The point in the question where the average (correct) buzz was located. Higher is harder.</p>
+    <p>Higher delta: the bonus with the bigger difference in conversion rates between specified bonus parts.</p>
+    <p>Juxtabowl: portmanteau of Juxtaposition (comparison, contrast) and Quizbowl (from the portuguese <i>Quizbolas</i> ("throwing weapon")).</p>
   </div>
 </div>
 
@@ -473,8 +480,8 @@
     const resTable = document.getElementById('resTable');
     resTable.style.display = 'none'; // Or 'table' if it's a <table> element
     // Find matching rows in the Excel data
-    document.getElementById('bRunk').textContent  = Math.trunc((Date.now() - 1746072001000) / 86400000) * 6 + 1 +(50);
-	document.getElementById('tRunk').textContent  = Math.trunc((Date.now() - 1746072001000) / 86400000) * 4 + 1 +(50);
+    document.getElementById('bRunk').textContent  = Math.trunc((Date.now() - 1746072001000) / 86400000) * 6 + 1;
+	document.getElementById('tRunk').textContent  = Math.trunc((Date.now() - 1746072001000) / 86400000) * 4 + 1;
 	document.getElementById('runk').textContent  = 1;
     const Qtype = Math.abs(Math.round((Math.sin(parseInt(document.getElementById('tRunk').textContent)) * 10000)) % 3);
 	const city1Data = jsonData.find(row => row.Order === parseInt(document.getElementById('tRunk').textContent));
