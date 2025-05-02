@@ -275,6 +275,7 @@
     <p>Interrupt percentage: the percentage of rooms where at least one player buzzed in incorrectly before the end of the question</p>
     <p>Conversion percentage: the percentage of rooms where one player buzzed in with the correct answer</p>
     <p>Average buzz: The point in the question where the average (correct) buzz was located. Higher is harder.</p>
+    <p>PPB: Points per bonus. Essentially, which bonus had more parts converted by more teams on average.</p>
     <p>Higher delta: the bonus with the bigger difference in conversion rates between specified bonus parts.</p>
     <p>Juxtabowl: portmanteau of Juxtaposition (comparison, contrast) and Quizbowl (from the portuguese <i>Quizbolas</i> ("throwing weapon")).</p>
   </div>
@@ -564,8 +565,8 @@ function resolveBonus() {
   const city1Answer = document.getElementById('city1-name').textContent.trim();
   const city2Answer = document.getElementById('city2-name').textContent.trim();
   const Qtype = document.getElementById('qtype').textContent.trim();
-  const city1Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('runk').textContent));
-  const city2Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('runk').textContent)+1);
+  const city1Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('bRunk').textContent));
+  const city2Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('bRunk').textContent)+1);
   if (Qtype === '0') {
     document.getElementById('city1-margin').textContent = city1Data.PPB;
 	document.getElementById('city2-margin').textContent = city2Data.PPB;
@@ -687,8 +688,8 @@ function resolveBPart() {
   const city1Answer = document.getElementById('city1-name').textContent.trim();
   const city2Answer = document.getElementById('city2-name').textContent.trim();
   const Qtype = document.getElementById('qtype').textContent.trim();
-  const city1Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('runk').textContent));
-  const city2Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('runk').textContent)+1);
+  const city1Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('bRunk').textContent));
+  const city2Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('bRunk').textContent)+1);
   if (Qtype === '0') {
     document.getElementById('city1-margin').textContent = `${(city1Data.EConv * 100).toFixed(0)}%`;
 	document.getElementById('city2-margin').textContent = `${(city2Data.EConv * 100).toFixed(0)}%`;
