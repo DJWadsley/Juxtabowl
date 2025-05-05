@@ -328,16 +328,16 @@
 	  for (let j = 0; j < numCols; j++) {
         cells[0].textContent = document.getElementById('city1-name').textContent + '   ' + document.getElementById('city1-margin').textContent;
         cells[1].textContent = document.getElementById('city2-name').textContent + '   ' + document.getElementById('city2-margin').textContent;
-		if (document.getElementById('lr').textContent === 1 && parseInt(document.getElementById('city1-margin').textContent) > parseInt(document.getElementById('city2-margin').textContent) ) {
+		if (document.getElementById('lr').textContent === '1' && parseInt(document.getElementById('city1-margin').textContent) > parseInt(document.getElementById('city2-margin').textContent) ) {
 		cells[0].style.backgroundColor = 'green';
 		}
-		if (document.getElementById('lr').textContent === 1 && parseInt(document.getElementById('city1-margin').textContent) < parseInt(document.getElementById('city2-margin').textContent) ) {
+		if (document.getElementById('lr').textContent === '1' && parseInt(document.getElementById('city1-margin').textContent) < parseInt(document.getElementById('city2-margin').textContent) ) {
 		cells[0].style.backgroundColor = 'red';
 		}
-		if (document.getElementById('lr').textContent === 0 && parseInt(document.getElementById('city1-margin').textContent) > parseInt(document.getElementById('city2-margin').textContent) ) {
+		if (document.getElementById('lr').textContent === '0' && parseInt(document.getElementById('city1-margin').textContent) > parseInt(document.getElementById('city2-margin').textContent) ) {
 		cells[1].style.backgroundColor = 'red';
 		}
-		if (document.getElementById('lr').textContent === 0 && parseInt(document.getElementById('city1-margin').textContent) < parseInt(document.getElementById('city2-margin').textContent) ) {
+		if (document.getElementById('lr').textContent === '0' && parseInt(document.getElementById('city1-margin').textContent) < parseInt(document.getElementById('city2-margin').textContent) ) {
 		cells[1].style.backgroundColor = 'green';
 		}
       }
