@@ -581,7 +581,7 @@ function resolveBonus() {
   const Qtype = document.getElementById('qtype').textContent.trim();
   const city1Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('bRunk').textContent));
   const city2Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('bRunk').textContent)+1);
-  const oldCornum = document.getElementById('corrnum');
+  const oldCornum = document.getElementById('corrnum').textContent;
   if (Qtype === '0') {
     document.getElementById('city1-margin').textContent = city1Data.PPB;
 	document.getElementById('city2-margin').textContent = city2Data.PPB;
@@ -646,7 +646,7 @@ function resolveTossup() {
   const city1Answer = document.getElementById('city1-name').textContent.trim();
   const city2Answer = document.getElementById('city2-name').textContent.trim();
   const Qtype = document.getElementById('qtype').textContent.trim();
-  const oldCornum = document.getElementById('corrnum');
+  const oldCornum = document.getElementById('corrnum').textContent;
   const city1Data = jsonData.find(row =>
     row.Answer && row.Answer.toString().trim().toLowerCase() === city1Answer.toLowerCase()
   );
@@ -717,7 +717,7 @@ function resolveBPart() {
   const Qtype = document.getElementById('qtype').textContent.trim();
   const city1Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('bRunk').textContent));
   const city2Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('bRunk').textContent)+1);
-  const oldCornum = document.getElementById('corrnum');
+  const oldCornum = document.getElementById('corrnum').textContent;
   if (Qtype === '0') {
     document.getElementById('city1-margin').textContent = `${(city1Data.EConv * 100).toFixed(0)}%`;
 	document.getElementById('city2-margin').textContent = `${(city2Data.EConv * 100).toFixed(0)}%`;
