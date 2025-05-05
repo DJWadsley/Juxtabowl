@@ -624,7 +624,7 @@ function resolveBonus() {
   else {
   corbool = true;
   }
-  fillTable();
+  fillTable(corbool);
   document.getElementById('runk').textContent = parseInt(document.getElementById('runk').textContent)+2;
   document.getElementById('bRunk').textContent = parseInt(document.getElementById('bRunk').textContent)+2;
   if (document.getElementById('runk').textContent === '11') {
@@ -693,7 +693,7 @@ function resolveTossup() {
   else {
   corbool = true;
   }
-  fillTable();
+  fillTable(corbool);
   document.getElementById('runk').textContent = parseInt(document.getElementById('runk').textContent)+2;
   document.getElementById('tRunk').textContent = parseInt(document.getElementById('tRunk').textContent)+2;
   if (document.getElementById('runk').textContent === '11') {
@@ -738,10 +738,10 @@ function resolveBPart() {
   } else if (Qtype === '1') {
     if (city2Data.MConv < city1Data.MConv) {
     document.getElementById('city2-box').style.backgroundColor = ' #54ec4e'; // Hexadecimal color;
-	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+ 1 -  parseInt(document.getElementById('lr').textContent);
+	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent) + 1 -  parseInt(document.getElementById('lr').textContent);
     } else {
     document.getElementById('city1-box').style.backgroundColor = ' #54ec4e'; // Hexadecimal color;
-	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+  parseInt(document.getElementById('lr').textContent);
+	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent) +  parseInt(document.getElementById('lr').textContent);
     }
   } else if (Qtype === '2') {
     if (city2Data.HConv < city1Data.HConv) {
