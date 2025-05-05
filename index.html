@@ -317,7 +317,7 @@
   }
     }
 	
-	function fillTable (const corbool) {
+	function fillTable (corbool) {
     const table = document.getElementById('resTable');
     const rows = table.getElementsByTagName('tr');
     const numCols = 2; // The matrix has 2 columns
@@ -618,7 +618,12 @@ function resolveBonus() {
     }
     
   }
-  
+  if (oldCornum === document.getElementById('corrnum')) {
+  corbool = false;
+  }
+  else {
+  corbool = true;
+  }
   fillTable();
   document.getElementById('runk').textContent = parseInt(document.getElementById('runk').textContent)+2;
   document.getElementById('bRunk').textContent = parseInt(document.getElementById('bRunk').textContent)+2;
@@ -682,6 +687,12 @@ function resolveTossup() {
 	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+ parseInt(document.getElementById('lr').textContent);
     }
   }
+  if (oldCornum === document.getElementById('corrnum')) {
+  corbool = false;
+  }
+  else {
+  corbool = true;
+  }
   fillTable();
   document.getElementById('runk').textContent = parseInt(document.getElementById('runk').textContent)+2;
   document.getElementById('tRunk').textContent = parseInt(document.getElementById('tRunk').textContent)+2;
@@ -741,7 +752,7 @@ function resolveBPart() {
 	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+ parseInt(document.getElementById('lr').textContent);
     }
   }
-  if (oldCornum === document.getElementById('corrnum') {
+  if (oldCornum === document.getElementById('corrnum')) {
   corbool = false;
   }
   else {
