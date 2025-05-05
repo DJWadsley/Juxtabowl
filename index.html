@@ -619,7 +619,7 @@ function resolveBonus() {
     }
     
   }
-  if (oldCornum === document.getElementById('corrnum')) {
+  if (oldCornum === document.getElementById('corrnum').textContent) {
   corbool = false;
   }
   else {
@@ -689,7 +689,7 @@ function resolveTossup() {
 	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+ parseInt(document.getElementById('lr').textContent);
     }
   }
-  if (oldCornum === document.getElementById('corrnum')) {
+  if (oldCornum === document.getElementById('corrnum').textContent) {
   corbool = false;
   }
   else {
@@ -754,7 +754,7 @@ function resolveBPart() {
 	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+ parseInt(document.getElementById('lr').textContent);
     }
   }
-  if (oldCornum === document.getElementById('corrnum')) {
+  if (oldCornum === document.getElementById('corrnum').textContent) {
   corbool = false;
   }
   else {
