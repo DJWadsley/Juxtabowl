@@ -292,15 +292,15 @@
 	  	if (corrnum === 0) {
 	  document.getElementById('question1').textContent  = 'Everyone is impressive in their own way. \n 0/5';
 	} else if (corrnum === 1) {
-	  document.getElementById('question1').textContent  = 'Despair is but the first few thousand steps on the road to enlightenment. \n 1/5';
+	  document.getElementById('question1').textContent  = 'Next year in Jerusalem. \n 1/5';
 	} else if (corrnum === 2) {
 	  document.getElementById('question1').textContent  = 'Almost better than a monkey throwing darts. \n 2/5';
 	} else if (corrnum === 3) {
 	  document.getElementById('question1').textContent  = 'Statistically, above average. \n 3/5';
 	} else if (corrnum === 4) {
-	  document.getElementById('question1').textContent  = 'okay... \n 4/5';
+	  document.getElementById('question1').textContent  = 'It was a BS question anyway, right?  \n 4/5';
 	} else if (corrnum === 5) {
-	  document.getElementById('question1').textContent  = 'Congralation ! \n 5/5';
+	  document.getElementById('question1').textContent  = 'You are winner ! \n 5/5';
 	}
 	const city1Box = document.getElementById('city1-box');
     const city2Box = document.getElementById('city2-box');
@@ -328,6 +328,18 @@
 	  for (let j = 0; j < numCols; j++) {
         cells[0].textContent = document.getElementById('city1-name').textContent + '   ' + document.getElementById('city1-margin').textContent;
         cells[1].textContent = document.getElementById('city2-name').textContent + '   ' + document.getElementById('city2-margin').textContent;
+		if (document.getElementById('lr') === 1 && parseInt(document.getElementById('city1-margin').textContent) > parseInt(document.getElementById('city2-margin').textContent) ) {
+		cells[0].style.color = 'green';
+		}
+		if (document.getElementById('lr') === 1 && parseInt(document.getElementById('city1-margin').textContent) < parseInt(document.getElementById('city2-margin').textContent) ) {
+		cells[0].style.color = 'red';
+		}
+		if (document.getElementById('lr') === 0 && parseInt(document.getElementById('city1-margin').textContent) > parseInt(document.getElementById('city2-margin').textContent) ) {
+		cells[1].style.color = 'red';
+		}
+		if (document.getElementById('lr') === 0 && parseInt(document.getElementById('city1-margin').textContent) < parseInt(document.getElementById('city2-margin').textContent) ) {
+		cells[1].style.color = 'green';
+		}
       }
 	  
       return; // Exit after filling the first empty row
@@ -468,6 +480,7 @@
   <script>
   
   let jsonData = null;
+  let corbool = null;
   
     document.getElementById('starter').addEventListener('click', function () {
     fetch('juxtabowlbase.xlsx')
