@@ -317,27 +317,28 @@
   }
     }
 	
-	function fillTable () {
+	function fillTable (const corbool) {
     const table = document.getElementById('resTable');
     const rows = table.getElementsByTagName('tr');
     const numCols = 2; // The matrix has 2 columns
     const i = Math.trunc(parseInt(document.getElementById('runk').textContent) / 2)
+	
 	
 	const cells = rows[i].getElementsByTagName('td');
       // This row exists but is empty, fill it
 	  for (let j = 0; j < numCols; j++) {
         cells[0].textContent = document.getElementById('city1-name').textContent + '   ' + document.getElementById('city1-margin').textContent;
         cells[1].textContent = document.getElementById('city2-name').textContent + '   ' + document.getElementById('city2-margin').textContent;
-		if (document.getElementById('lr').textContent === '1' && parseInt(document.getElementById('city1-margin').textContent) > parseInt(document.getElementById('city2-margin').textContent) ) {
+		if (document.getElementById('lr').textContent === '1' && corbool === true) {
 		cells[0].style.backgroundColor = 'green';
 		}
-		if (document.getElementById('lr').textContent === '1' && parseInt(document.getElementById('city1-margin').textContent) < parseInt(document.getElementById('city2-margin').textContent) ) {
+		if (document.getElementById('lr').textContent === '1' && corbool === false) ) {
 		cells[0].style.backgroundColor = 'red';
 		}
-		if (document.getElementById('lr').textContent === '0' && parseInt(document.getElementById('city1-margin').textContent) > parseInt(document.getElementById('city2-margin').textContent) ) {
+		if (document.getElementById('lr').textContent === '0' && corbool === false) ) {
 		cells[1].style.backgroundColor = 'red';
 		}
-		if (document.getElementById('lr').textContent === '0' && parseInt(document.getElementById('city1-margin').textContent) < parseInt(document.getElementById('city2-margin').textContent) ) {
+		if (document.getElementById('lr').textContent === '0' && corbool === true)  {
 		cells[1].style.backgroundColor = 'green';
 		}
       }
@@ -703,6 +704,7 @@ function resolveBPart() {
   const Qtype = document.getElementById('qtype').textContent.trim();
   const city1Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('bRunk').textContent));
   const city2Data = jsonData.find(row => row.BOrder === parseInt(document.getElementById('bRunk').textContent)+1);
+  const oldCornum = document.getElementById('corrnum');
   if (Qtype === '0') {
     document.getElementById('city1-margin').textContent = `${(city1Data.EConv * 100).toFixed(0)}%`;
 	document.getElementById('city2-margin').textContent = `${(city2Data.EConv * 100).toFixed(0)}%`;
@@ -739,7 +741,13 @@ function resolveBPart() {
 	document.getElementById('corrnum').textContent = parseInt(document.getElementById('corrnum').textContent)+ parseInt(document.getElementById('lr').textContent);
     }
   }
-  fillTable();
+  if (oldCornum === document.getElementById('corrnum') {
+  corbool = false;
+  }
+  else {
+  corbool = true;
+  }
+  fillTable(corbool);
   document.getElementById('runk').textContent = parseInt(document.getElementById('runk').textContent)+2;
   document.getElementById('bRunk').textContent = parseInt(document.getElementById('bRunk').textContent)+2;
   if (document.getElementById('runk').textContent === '11') {
